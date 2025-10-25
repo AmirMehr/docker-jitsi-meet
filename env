@@ -25,7 +25,7 @@ HTTP_PORT=80
 HTTPS_PORT=443
 
 # System time zone
-TZ=UTC
+TZ=Asia/Tehran
 
 # Public URL for the web service (required)
 # Keep in mind that if you use a non-standard HTTPS port, it has to appear in the public URL
@@ -119,13 +119,15 @@ LETSENCRYPT_ACME_SERVER="letsencrypt"
 #
 
 # Enable authentication (will ask for login and password to join the meeting)
-#ENABLE_AUTH=1
+ENABLE_AUTH=1
+JWT_ALLOW_EMPTY=0
 
 # Enable guest access (if authentication is enabled, this allows for users to be held in lobby until registered user lets them in)
-#ENABLE_GUESTS=1
+ENABLE_GUESTS=0
 
 # Select authentication type: internal, jwt, ldap or matrix
-#AUTH_TYPE=internal
+AUTH_TYPE=jwt
+XMPP_MUC_MODULES=token_verification,token_moderation
 
 # JWT authentication
 #
