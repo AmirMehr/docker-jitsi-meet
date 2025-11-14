@@ -1,0 +1,8 @@
+{
+  "title": "Jitsi Whiteboard",
+  "padOptions": {
+    "noColors": false,
+    "showChat": false,
+    "showLineNumbers": false
+  }
+}

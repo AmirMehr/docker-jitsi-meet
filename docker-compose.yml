@@ -504,6 +504,22 @@ services:
         networks:
             meet.jitsi:
 
+    etherpad:
+        image: etherpad/etherpad:latest
+        restart: unless-stopped
+        environment:
+            - TITLE=Jitsi Whiteboard
+            - ETHERPAD_ADMIN_USER=admin
+            - ADMIN_PASSWORD=qW9aJ0$pF7vE2gSxP1
+        ports:
+            - "9001:9001"
+        volumes:
+            - ./etherpad/var:/opt/etherpad-lite/var
+            - ./etherpad/settings.json.docker:/opt/etherpad-lite/settings.json.docker:ro
+
+
+
+
 # Custom network so all services can communicate using a FQDN
 networks:
     meet.jitsi:
