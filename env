@@ -317,3 +317,23 @@ JIGASI_TRANSCRIBER_PASSWORD=dee14582759dc8deafc525ab2b3ee25b
 ENABLE_RECORDING=0
 ENABLE_JIBRI=0
 
+# This creates the directories that will override the defaults in the Docker containers
+mkdir -p ~/.jitsi-meet-cfg/{web,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb}
+
+wget https://raw.githubusercontent.com/jitsi-contrib/prosody-plugins/main/token_affiliation/token_affiliation.lua -P ~/.jitsi-meet-cfg/prosody/prosody-plugins-custom/
+
+Bash
+
+nano ~/.jitsi-meet-cfg/prosody/config/zzz-token-affiliation.cfg.lua
+Paste the following Lua code into that file. This tells the main "conference" component to activate the token_affiliation module.
+
+Lua
+
+-- This file enables the token_affiliation plugin
+-- It tells Prosody to read the 'affiliation' field from the JWT
+Component "conference.{{ .Env.XMPP_DOMAIN }}" "muc"
+    modules_enabled = {
+        "token_affiliation";
+    }
+
+wget https://raw.githubusercontent.com/jitsi-contrib/prosody-plugins/main/token_affiliation/mod_token_affiliation.lua -O custom_prosody_plugins/mod_token_affiliation.lua
