@@ -188,6 +188,10 @@ VirtualHost "{{ $XMPP_DOMAIN }}"
         {{ if .Env.XMPP_MODULES }}
         "{{ join "\";\n        \"" (splitList "," .Env.XMPP_MODULES | compact) }}";
         {{ end }}
+        {{ if and $ENABLE_AUTH (eq $PROSODY_AUTH_TYPE "jwt")) }}
+        "token_verification";
+        "token_affiliation";
+        {{ end }}
         {{ if and $ENABLE_AUTH (eq $PROSODY_AUTH_TYPE "ldap") }}
         "auth_cyrus";
         {{end}}
@@ -308,7 +312,8 @@ Component "{{ $XMPP_MUC_DOMAIN }}" "muc"
         "{{ join "\";\n        \"" (splitList "," .Env.XMPP_MUC_MODULES | compact) }}";
         {{ end -}}
         {{ if and $ENABLE_AUTH (or (eq $PROSODY_AUTH_TYPE "jwt") (eq $PROSODY_AUTH_TYPE "hybrid_matrix_token")) -}}
-        "{{ $JWT_TOKEN_AUTH_MODULE }}";
+        "token_verification";
+        "token_affiliation";
         {{ end }}
         {{ if and $ENABLE_AUTH (eq $PROSODY_AUTH_TYPE "matrix") $MATRIX_UVS_SYNC_POWER_LEVELS -}}
         "matrix_power_sync";

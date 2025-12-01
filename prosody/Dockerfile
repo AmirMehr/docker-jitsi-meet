@@ -75,3 +75,7 @@ COPY --from=builder /usr/local/share/lua/5.4 /usr/local/share/lua/5.4
 EXPOSE 5222 5280
 
 VOLUME ["/config", "/prosody-plugins-custom"]
+
+COPY prosody-modules/token_affiliation /prosody-modules/token_affiliation
+RUN mkdir -p /usr/lib/prosody/modules && \
+    cp -r /prosody-modules/* /usr/lib/prosody/modules/
